@@ -32,7 +32,7 @@ def carregar_dados():
         return []
 
 def adicionar_aluno(lista):
-    os.system('cls')
+    os.system('clear')
     nome_aluno = input('Nome do aluno: ')
     nome_responsavel = input('Nome do responsável: ')
     cpf = input('CPF do responsável: ')
@@ -43,10 +43,10 @@ def adicionar_aluno(lista):
     print("Aluno adicionado com sucesso!")
 
 def excluir_aluno(lista):
-    nome_excluir = input("Qual aluno você quer excluir? ")
+    cpf_excluir = input("Digite o CPF do RESPONSÁVEL do aluno que você quer excluir: ")
     
     for aluno in lista:
-        if aluno['nome_aluno'] == nome_excluir:
+        if aluno['cpf'] == cpf_excluir:
             lista.remove(aluno)
             salvar_dados(lista)
             print("Aluno excluído com sucesso!")
@@ -58,19 +58,17 @@ def listar_alunos(lista):
         print(f"{indice+1}. {aluno['nome_aluno']} - {aluno['telefone']}")
 
 def atualizar_aluno(lista):
-    nome_atualizar = input("Qual aluno você quer atualizar? ")
+    cpf_atualizar = input("Digite o CPF do RESPONSÁVEL do aluno que você quer atualizar: ")
     for aluno in lista:
-        if aluno['nome_aluno'] == nome_atualizar:
+        if aluno['cpf'] == cpf_atualizar:
             novo_nome_aluno = input("Novo nome do aluno: ")
             novo_nome_resp = input("Novo nome do responsável: ")
             novo_endereco = input("Novo endereço do aluno: ")
-            novo_cpf = input("Novo CPF: ")
             novo_telefone = input("Novo telefone: ")
 
             aluno['nome_aluno'] = novo_nome_aluno
             aluno['nome_responsavel'] = novo_nome_resp
             aluno['endereco'] = novo_endereco
-            aluno['cpf'] = novo_cpf
             aluno['telefone'] = novo_telefone
             
             salvar_dados(lista)
@@ -84,7 +82,7 @@ def menu_principal(lista):
         resposta = input("1 - Área Do Aluno\n2 - Informar Ida ao Colégio\n3 - Chat\n4 - Avaliar Serviço\n5 - Logout\nOpção: ")
 
         if resposta == '1':
-            os.system('cls')
+            os.system('clear')
             while True:
                 print("Área do Aluno🚌")
                 resposta = input("1 - Adicionar Aluno\n2 - Excluir Aluno\n3 - Listar Alunos\n4 - Atualizar Aluno\n5 - Voltar\nOpção: ")
@@ -98,21 +96,21 @@ def menu_principal(lista):
                 elif resposta == "4":
                     atualizar_aluno(lista)
                 elif resposta == "5":
-                    os.system('cls')
+                    os.system('clear')
                     break
                 else:
                     print("Resposta inválida.")
         elif resposta == '2':
-            os.system('cls')
+            os.system('clear')
             print("Ida ao colégio notificada com sucesso!✅")
         elif resposta == '3':
-            os.system('cls')
+            os.system('clear')
             print("Ainda estamos trabalhando nisso...⏳")
         elif resposta == '4':
-            os.system('cls')
+            os.system('clear')
             print("Ainda estamos trabalhando nisso...⏳")
         elif resposta == '5':
-            os.system('cls')
+            os.system('clear')
             break
         else:
             print("Opção inválida.")
