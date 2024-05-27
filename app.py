@@ -20,13 +20,13 @@ def autenticar_usuario(login_data):
             return True
     return False
 
-def salvar_dados(lista):
-    with open('alunos.json', 'w') as arquivo:
+def salvar_dados(lista, filename='alunos.json'):
+    with open(filename, 'w') as arquivo:
         json.dump(lista, arquivo)
 
-def carregar_dados():
+def carregar_dados(filename='alunos.json'):
     try:
-        with open('alunos.json', 'r') as arquivo:
+        with open(filename, 'r') as arquivo:
             return json.load(arquivo)
     except FileNotFoundError:
         return []
@@ -43,7 +43,7 @@ def adicionar_aluno(lista):
     print("Aluno adicionado com sucesso!")
 
 def excluir_aluno(lista):
-    cpf_excluir = input("Digite o CPF do RESPONSÁVEL do aluno que você quer excluir: ")
+    cpf_excluir = input("Digite o CPF do aluno que você quer excluir: ")
     
     for aluno in lista:
         if aluno['cpf'] == cpf_excluir:
@@ -58,7 +58,7 @@ def listar_alunos(lista):
         print(f"{indice+1}. {aluno['nome_aluno']} - {aluno['telefone']}")
 
 def atualizar_aluno(lista):
-    cpf_atualizar = input("Digite o CPF do RESPONSÁVEL do aluno que você quer atualizar: ")
+    cpf_atualizar = input("Digite o CPF do aluno que você quer atualizar: ")
     for aluno in lista:
         if aluno['cpf'] == cpf_atualizar:
             novo_nome_aluno = input("Novo nome do aluno: ")
@@ -76,41 +76,43 @@ def atualizar_aluno(lista):
             return
     print("Aluno não encontrado.")
 
-def menu_principal(lista):
+def menu_responsaveis(lista):
+    while True:
+        print("Área do Aluno🚌")
+        resposta = input("1 - Adicionar Aluno\n2 - Excluir Aluno\n3 - Listar Alunos\n4 - Atualizar Aluno\n5 - Voltar\nOpção: ")
+
+        if resposta == "1":
+            adicionar_aluno(lista)
+        elif resposta == "2":
+            excluir_aluno(lista)
+        elif resposta == "3":
+            listar_alunos(lista)
+        elif resposta == "4":
+            atualizar_aluno(lista)
+        elif resposta == "5":
+            os.system('clear')
+            break
+        else:
+            print("Resposta inválida.")
+
+def menu_principal():
     while True:
         print("Selecione uma opção:")
-        resposta = input("1 - Área Do Aluno\n2 - Informar Ida ao Colégio\n3 - Chat\n4 - Avaliar Serviço\n5 - Logout\nOpção: ")
+        resposta = input("1 - Cadastro de Responsáveis/Alunos\n2 - Cadastro de Motoristas\n3 - Cadastro de Escolas\n4 - Logout\nOpção: ")
 
         if resposta == '1':
             os.system('clear')
-            while True:
-                print("Área do Aluno🚌")
-                resposta = input("1 - Adicionar Aluno\n2 - Excluir Aluno\n3 - Listar Alunos\n4 - Atualizar Aluno\n5 - Voltar\nOpção: ")
-
-                if resposta == "1":
-                    adicionar_aluno(lista)
-                elif resposta == "2":
-                    excluir_aluno(lista)
-                elif resposta == "3":
-                    listar_alunos(lista)
-                elif resposta == "4":
-                    atualizar_aluno(lista)
-                elif resposta == "5":
-                    os.system('clear')
-                    break
-                else:
-                    print("Resposta inválida.")
+            lista = carregar_dados()
+            menu_responsaveis(lista)
         elif resposta == '2':
             os.system('clear')
-            print("Ida ao colégio notificada com sucesso!✅")
+            print("Cadastro de Motoristas ainda não implementado...⏳")
         elif resposta == '3':
             os.system('clear')
-            print("Ainda estamos trabalhando nisso...⏳")
+            print("Cadastro de Escolas ainda não implementado...⏳")
         elif resposta == '4':
             os.system('clear')
-            print("Ainda estamos trabalhando nisso...⏳")
-        elif resposta == '5':
-            os.system('clear')
+            print("Logout realizado com sucesso!")
             break
         else:
             print("Opção inválida.")
@@ -128,8 +130,7 @@ def main():
         if opcao == '1':
             if autenticar_usuario(login_data):
                 print("Autenticação bem-sucedida!")
-                lista = carregar_dados()
-                menu_principal(lista)
+                menu_principal()
             else:
                 print("Login ou senha incorretos.")
         elif opcao == '2':
